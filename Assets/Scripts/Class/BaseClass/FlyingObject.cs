@@ -11,8 +11,8 @@ namespace Assets.Scripts.Class.BaseClass
         public bool orientToDirection = false;
         public Weapons.Weapon.WeaponInitInfo[] normalWeaponInfos;
 
-        protected Weapons.Weapon[] normalWeapons;
-        protected int currentWeaponIdx;
+        public Weapons.Weapon[] normalWeapons { get; protected set; }
+        public int currentWeaponIdx { get; protected set; }
 
         protected override void InitCurrentAttr()
         {

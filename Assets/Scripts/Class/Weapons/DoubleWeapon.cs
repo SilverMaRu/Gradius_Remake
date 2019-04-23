@@ -7,11 +7,13 @@ namespace Assets.Scripts.Class.Weapons
         public GameObject secondaryBulletPre { get; protected set; }
         public Transform secondaryBarrelTrans { get; protected set; }
 
-        public DoubleWeapon(string bulletPath, Transform barrelTrans,Transform secondaryBarrelTrans,  float shootFrequency) :this(bulletPath, bulletPath, barrelTrans, secondaryBarrelTrans, shootFrequency)
+        public DoubleWeapon(string bulletPath, Transform barrelTrans, Transform secondaryBarrelTrans, float shootFrequency, BaseClass.Team team)
+            : this(bulletPath, bulletPath, barrelTrans, secondaryBarrelTrans, shootFrequency, team)
         {
         }
 
-        public DoubleWeapon(string bulletPath, string secondaryBulletPath, Transform barrelTrans, Transform secondaryBarrelTrans, float shootFrequency): base(bulletPath, barrelTrans, shootFrequency)
+        public DoubleWeapon(string bulletPath, string secondaryBulletPath, Transform barrelTrans, Transform secondaryBarrelTrans, float shootFrequency, BaseClass.Team team)
+            : base(bulletPath, barrelTrans, shootFrequency, team)
         {
             secondaryBulletPre = Resources.Load<GameObject>(secondaryBulletPath);
             this.secondaryBarrelTrans = secondaryBarrelTrans;
@@ -20,7 +22,9 @@ namespace Assets.Scripts.Class.Weapons
         protected override void Shoot()
         {
             base.Shoot();
-            Object.Instantiate(secondaryBulletPre, secondaryBarrelTrans.position, secondaryBarrelTrans.rotation);
+            GameObject instance = Object.Instantiate(secondaryBulletPre, secondaryBarrelTrans.position, secondaryBarrelTrans.rotation);
+            BaseClass.Something something = instance.GetComponent<BaseClass.Something>();
+            something.team = team;
         }
     }
 }

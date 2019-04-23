@@ -112,36 +112,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &89945922 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4529574974200103380, guid: a0518072972f4fe4b9972f55af8daeea,
-    type: 3}
-  m_PrefabInstance: {fileID: 1708731338}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &89945927
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 89945922}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f84ce5c9d88d1548aa86e4585c5c8bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  team: 0
-  atk: 0
-  maxHp: 0
-  baseHp: 0
-  penetrateImmunity: 0
-  maxSpeed: 10
-  baseSpeed: 7
-  isNormalized: 0
-  orientToDirection: 0
-  normalWeaponInfos: []
-  outOfXOffset: 1
-  routeGameObject: {fileID: 1800216961}
 --- !u!1 &197615702
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,36 +551,6 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 401413356473823131, guid: a0518072972f4fe4b9972f55af8daeea, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a0518072972f4fe4b9972f55af8daeea, type: 3}
---- !u!1 &788191973 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4529574974200103380, guid: a0518072972f4fe4b9972f55af8daeea,
-    type: 3}
-  m_PrefabInstance: {fileID: 1019300115}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &788191978
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 788191973}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f84ce5c9d88d1548aa86e4585c5c8bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  team: 0
-  atk: 0
-  maxHp: 0
-  baseHp: 0
-  penetrateImmunity: 0
-  maxSpeed: 10
-  baseSpeed: 7
-  isNormalized: 0
-  orientToDirection: 0
-  normalWeaponInfos: []
-  outOfXOffset: 1
-  routeGameObject: {fileID: 1800216961}
 --- !u!1001 &852561641
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -631,7 +571,7 @@ PrefabInstance:
     - target: {fileID: 5995510204626877218, guid: 8d52313b1c4e763498e528a43e49f5d3,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 4.23
       objectReference: {fileID: 0}
     - target: {fileID: 5995510204626877218, guid: 8d52313b1c4e763498e528a43e49f5d3,
         type: 3}

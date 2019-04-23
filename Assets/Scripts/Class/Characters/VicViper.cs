@@ -12,10 +12,12 @@ namespace Assets.Scripts.Class.Characters
         public Weapon.WeaponInitInfo doubleWeaponInfo;
         public Weapon.WeaponInitInfo missileWeaponInfo;
         
-        private Weapon doubleWeapon;
-        private bool usingDouble;
-        private Weapon missile;
-        private bool usingMissile;
+        public Weapon doubleWeapon { get; protected set; }
+        public bool usingDouble { get; protected set; }
+        public Weapon missile { get; protected set; }
+        public bool usingMissile { get; protected set; }
+        public int maxMissileLevel = 2;
+        public int currentMissileLevel { get; protected set; }
 
 
         public int maxPowerBoxNum = 5;
@@ -23,6 +25,12 @@ namespace Assets.Scripts.Class.Characters
         private int currentPowerBoxNum;
 
         public int revival = 1;
+
+        public int maxOptionNum = 3;
+        public int baseOptionNum = 0;
+        private int currentOptionNum;
+        private Option[] options;
+        private GameObject optionPrefab;
 
         protected override void Init()
         {
@@ -35,6 +43,20 @@ namespace Assets.Scripts.Class.Characters
             currentPowerBoxNum = basePowerBoxNum;
             usingDouble = false;
             usingMissile = false;
+            currentMissileLevel = 0;
+            currentOptionNum = basePowerBoxNum;
+        }
+
+        protected override void InitComponents()
+        {
+            base.InitComponents();
+            options = new Option[maxOptionNum];
+        }
+
+        protected override void InitGameObjects()
+        {
+            base.InitGameObjects();
+            optionPrefab = Resources.Load<GameObject>("Prefabs/VicViper/Remake/Option");
         }
 
         protected override void InitWeapon()
@@ -65,6 +87,16 @@ namespace Assets.Scripts.Class.Characters
                 {
                     GroupUp();
                 }
+
+                //测试用
+                if (Input.GetKeyDown(KeyCode.C))
+                {
+                    currentPowerBoxNum++;
+                    if (currentPowerBoxNum > maxPowerBoxNum)
+                    {
+                        currentPowerBoxNum = 1;
+                    }
+                }
             }
         }
 
@@ -83,9 +115,17 @@ namespace Assets.Scripts.Class.Characters
             {
                 doubleWeapon.TryShoot();
             }
-            if (usingMissile)
+            //if (usingMissile)
+            //{
+            //    missile.TryShoot();
+            //}
+            if (currentMissileLevel > 0)
             {
                 missile.TryShoot();
+            }
+            for (int i = 0; i < currentOptionNum; i++)
+            {
+                options[i].OptionShoot();
             }
         }
 
@@ -148,13 +188,30 @@ namespace Assets.Scripts.Class.Characters
             }
         }
 
+        private void SetOptionsWeapon()
+        {
+            for (int i = 0; i < currentOptionNum; i++)
+            {
+                options[i].ResetUsingWeapons();
+            }
+        }
+
         private bool GroupUpMissile()
         {
-            if (usingMissile)
+            //if (usingMissile)
+            //{
+            //    return false;
+            //}
+            //usingMissile = true;
+            //SetOptionsWeapon();
+            //return true;
+            if(currentMissileLevel >= maxMissileLevel)
             {
                 return false;
             }
-            usingMissile = true;
+            currentMissileLevel++;
+            missile.SetShootFrequency((float)(missile.shootFrequency - 0.5 * (currentMissileLevel - 1)));
+            SetOptionsWeapon();
             return true;
         }
 
@@ -166,6 +223,7 @@ namespace Assets.Scripts.Class.Characters
             }
             usingDouble = true;
             ChangeWeapon("NormalBullet");
+            SetOptionsWeapon();
             return true;
         }
 
@@ -179,15 +237,51 @@ namespace Assets.Scripts.Class.Characters
             }
             usingDouble = false;
             ChangeWeapon(bulletName);
+            SetOptionsWeapon();
             return true;
         }
 
         private bool GroupUpOption()
         {
-            return false;
+            if(currentOptionNum >= maxOptionNum)
+            {
+                return false;
+            }
+            GameObject optionInstance = Instantiate(optionPrefab, transform.position, Quaternion.identity);
+            AddOption(optionInstance.GetComponent<Option>());
+            return true;
         }
 
+        public void AddOption(Option newOption)
+        {
+            if(currentOptionNum == 0)
+            {
+                newOption.GetTarget(gameObject);
+            }
+            else
+            {
+                newOption.GetTarget(options[currentOptionNum - 1].gameObject);
+            }
+            options[currentOptionNum] = newOption;
+            currentOptionNum++;
+        }
 
+        protected override void Die()
+        {
+            revival--;
+            for (int i = 0; i < currentOptionNum; i++)
+            {
+                options[i].LostTarget();
+            }
+            if (revival <= 0)
+            {
+                base.Die();
+            }
+            else
+            {
+                InitCurrentAttr();
+            }
+        }
 
         protected override void OnTriggerEnter2D(Collider2D collision)
         {
@@ -205,6 +299,14 @@ namespace Assets.Scripts.Class.Characters
             {
                 revival++;
                 Destroy(collision.gameObject);
+            }
+            else if ("Option".Equals(collision.tag))
+            {
+                Option option = collision.GetComponent<Option>();
+                if (option != null)
+                {
+                    AddOption(option);
+                }
             }
         }
     }
