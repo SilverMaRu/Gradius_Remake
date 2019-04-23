@@ -10,7 +10,7 @@ namespace Assets.Scripts.Class.Weapons
             public string bulletPath;
             public GameObject barrelGameObj;
             public float shootFrequency;
-            public BaseClass.Team team;
+            public BaseClass.Team team { get; set; }
 
             public WeaponInitInfo(string bulletPath, GameObject barrelGameObj, float shootFrequency, BaseClass.Team team)
             {

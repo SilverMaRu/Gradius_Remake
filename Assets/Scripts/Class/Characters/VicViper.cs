@@ -64,10 +64,12 @@ namespace Assets.Scripts.Class.Characters
             base.InitWeapon();
             if (doubleWeaponInfo.IsEffective())
             {
+                doubleWeaponInfo.team = team;
                 doubleWeapon = new Weapon(doubleWeaponInfo);
             }
             if (missileWeaponInfo.IsEffective())
             {
+                missileWeaponInfo.team = team;
                 missile = new Weapon(missileWeaponInfo);
             }
         }
