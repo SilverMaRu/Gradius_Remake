@@ -74,8 +74,8 @@ namespace Assets.Scripts.Class.Characters
             missileWeaponInfo.barrelGameObj = missileBarrel;
 
             base.InitWeapon();
-            doubleWeapon = new Weapon(doubleWeaponInfo);
-            missile = new Weapon(missileWeaponInfo);
+            doubleWeapon = new Weapon(doubleWeaponInfo, 15);
+            missile = new Weapon(missileWeaponInfo, 10);
             ResetUsingWeapons();
         }
 

@@ -33,14 +33,13 @@ namespace Assets.Scripts.Class.Weapons
         public BaseClass.Team team { get; protected set; }
         public WeaponInitInfo info { get; protected set; }
 
+        protected ObjectPool bulletPool;
+
         private float lastShootTime;
 
-        public Weapon(string bulletPath, Transform barrelTrans, BaseClass.Team team) : this(bulletPath, barrelTrans, 0, team)
-        {
+        public Weapon(string bulletPath, Transform barrelTrans, BaseClass.Team team, int initCapacity) : this(bulletPath, barrelTrans, 0, team, initCapacity, () => { }) { }
 
-        }
-
-        public Weapon(string bulletPath, Transform barrelTrans, float shootFrequency, BaseClass.Team team)
+        public Weapon(string bulletPath, Transform barrelTrans, float shootFrequency, BaseClass.Team team, int initCapacity, System.Action recyclingOtherAction)
         {
             info = new WeaponInitInfo(bulletPath, barrelTrans.gameObject, shootFrequency, team);
             bulletPre = Resources.Load<GameObject>(bulletPath);
@@ -48,9 +47,13 @@ namespace Assets.Scripts.Class.Weapons
             this.shootFrequency = shootFrequency;
             this.team = team;
             lastShootTime = -shootFrequency;
+
+            bulletPool = new ObjectPool(bulletPre, initCapacity, recyclingOtherAction);
         }
 
-        public Weapon(WeaponInitInfo info)
+        public Weapon(WeaponInitInfo info, int initCapacity) : this(info, initCapacity, () => { }) { }
+
+        public Weapon(WeaponInitInfo info, int initCapacity, System.Action recyclingOtherAction)
         {
             this.info = info;
             bulletPre = Resources.Load<GameObject>(info.bulletPath);
@@ -58,6 +61,8 @@ namespace Assets.Scripts.Class.Weapons
             shootFrequency = info.shootFrequency;
             team = info.team;
             lastShootTime = -shootFrequency;
+
+            bulletPool = new ObjectPool(bulletPre, initCapacity, recyclingOtherAction);
         }
 
         public void TryShoot()
@@ -71,9 +76,11 @@ namespace Assets.Scripts.Class.Weapons
 
         protected virtual void Shoot()
         {
-            GameObject instance = Object.Instantiate(bulletPre, barrelTrans.position, barrelTrans.rotation);
+            //GameObject instance = Object.Instantiate(bulletPre, barrelTrans.position, barrelTrans.rotation);
+            GameObject instance = bulletPool.Get(barrelTrans.position, barrelTrans.rotation);
             BaseClass.Something something = instance.GetComponent<BaseClass.Something>();
             something.team = team;
+            //something.objectPool = bulletPool;
         }
 
         protected virtual bool CanShoot()

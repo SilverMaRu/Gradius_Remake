@@ -37,7 +37,7 @@ namespace Assets.Scripts.Class.BaseClass
                     if (normalWeaponInfos[i].IsEffective())
                     {
                         normalWeaponInfos[i].team = team;
-                        normalWeapons[i] = new Weapons.Weapon(normalWeaponInfos[i]);
+                        normalWeapons[i] = new Weapons.Weapon(normalWeaponInfos[i], 15);
                     }
                 }
             }

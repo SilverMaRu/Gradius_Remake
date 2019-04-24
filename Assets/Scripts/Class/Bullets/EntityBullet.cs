@@ -34,7 +34,14 @@ namespace Assets.Scripts.Class.Bullets
 
         protected virtual void Disappear()
         {
-            Destroy(gameObject);
+            if(objectPool == null)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                objectPool.Recycling(gameObject);
+            }
         }
     }
 }

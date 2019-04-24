@@ -21,7 +21,14 @@ namespace Assets.Scripts.Class.BaseClass
         protected virtual void Die()
         {
             isAlive = false;
-            Destroy(gameObject);
+            if (objectPool == null)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                objectPool.Recycling(gameObject);
+            }
         }
 
         public virtual void Hurt(int damage)

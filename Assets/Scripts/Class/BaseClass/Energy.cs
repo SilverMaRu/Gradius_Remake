@@ -20,7 +20,14 @@ namespace Assets.Scripts.Class.BaseClass
 
         protected virtual void Disappear()
         {
-            Destroy(gameObject);
+            if(objectPool == null)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                objectPool.Recycling(gameObject);
+            }
         }
 
         public virtual void HitSomething(int expend)

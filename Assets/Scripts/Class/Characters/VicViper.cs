@@ -30,11 +30,17 @@ namespace Assets.Scripts.Class.Characters
         public int baseOptionNum = 0;
         private int currentOptionNum;
         private Option[] options;
-        private GameObject optionPrefab;
+        //private GameObject optionPrefab;
+        private ObjectPool optionPool;
 
         protected override void Init()
         {
+            StopWatch watch = new StopWatch();
             base.Init();
+            watch.Pause();
+            watch.Restart();
+            optionPool = new ObjectPool("Prefabs/VicViper/Remake/Option", maxOptionNum);
+            watch.Stop();
         }
 
         protected override void InitCurrentAttr()
@@ -56,7 +62,7 @@ namespace Assets.Scripts.Class.Characters
         protected override void InitGameObjects()
         {
             base.InitGameObjects();
-            optionPrefab = Resources.Load<GameObject>("Prefabs/VicViper/Remake/Option");
+            //optionPrefab = Resources.Load<GameObject>("Prefabs/VicViper/Remake/Option");
         }
 
         protected override void InitWeapon()
@@ -65,12 +71,12 @@ namespace Assets.Scripts.Class.Characters
             if (doubleWeaponInfo.IsEffective())
             {
                 doubleWeaponInfo.team = team;
-                doubleWeapon = new Weapon(doubleWeaponInfo);
+                doubleWeapon = new Weapon(doubleWeaponInfo, 15);
             }
             if (missileWeaponInfo.IsEffective())
             {
                 missileWeaponInfo.team = team;
-                missile = new Weapon(missileWeaponInfo);
+                missile = new Weapon(missileWeaponInfo, 10);
             }
         }
 
@@ -249,7 +255,8 @@ namespace Assets.Scripts.Class.Characters
             {
                 return false;
             }
-            GameObject optionInstance = Instantiate(optionPrefab, transform.position, Quaternion.identity);
+            //GameObject optionInstance = Instantiate(optionPrefab, transform.position, Quaternion.identity);
+            GameObject optionInstance = optionPool.Get(transform.position, Quaternion.identity);
             AddOption(optionInstance.GetComponent<Option>());
             return true;
         }
