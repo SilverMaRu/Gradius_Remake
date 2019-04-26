@@ -4,13 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Enemy
-  - Enemy_1
   - VicViper
-  - Ground
+  - Enemy
+  - RevivalBox
   - PowerBox
   - Option
-  - RevivalBox
   layers:
   - Default
   - TransparentFX
@@ -20,9 +18,9 @@ TagManager:
   - UI
   - 
   - 
-  - Background
-  - Ground
-  - Foreground
+  - 
+  - 
+  - 
   - 
   - 
   - 
@@ -45,21 +43,6 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Background
-    uniqueID: 2501660703
-    locked: 0
-  - name: Floor
-    uniqueID: 1943272273
-    locked: 0
-  - name: Ceil
-    uniqueID: 2261833669
-    locked: 0
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Foreground
-    uniqueID: 3018468241
-    locked: 0
-  - name: UI
-    uniqueID: 2806053075
     locked: 0

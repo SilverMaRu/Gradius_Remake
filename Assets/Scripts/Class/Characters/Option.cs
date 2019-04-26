@@ -1,34 +1,24 @@
 ﻿using UnityEngine;
 using Assets.Scripts.Class.BaseClass;
-using Assets.Scripts.Class.Weapons;
+using Assets.Scripts.Others;
 
 namespace Assets.Scripts.Class.Characters
 {
-    public class Option : FlyingObject
+    public class Option : Auto
     {
-        public bool isActive = false;
+        private const int MISSILE_WEAPON = 1;
 
-        public GameObject followTarget;
+        public bool isActive = false;
+        public GameObject followTargetGameObj;
         public float followDistance = 3;
+
         private Vector3[] track;
         private int trackLength;
 
-        public GameObject normalBarrel;
-        public GameObject doubleBarrel;
-        public GameObject missileBarrel;
-
-        public Weapon.WeaponInitInfo doubleWeaponInfo;
-        public Weapon.WeaponInitInfo missileWeaponInfo;
-
-        public Weapon doubleWeapon { get; protected set; }
-        public bool usingDouble { get; protected set; }
-        public Weapon missile { get; protected set; }
-        public bool usingMissile { get; protected set; }
-        public int maxMissileLevel = 2;
-        public int currentMissileLevel { get; protected set; }
-
+        private int currentMissileLevel;
         private Collider2D coll;
         private SpriteRenderer sr;
+        private WeaponFlyingObject followTarget;
 
         protected override void Init()
         {
@@ -39,68 +29,25 @@ namespace Assets.Scripts.Class.Characters
         protected override void InitComponents()
         {
             base.InitComponents();
-            coll = gameObject.GetComponent<Collider2D>();
-            sr = gameObject.GetComponent<SpriteRenderer>();
+            coll = GetComponent<Collider2D>();
+            sr = GetComponent<SpriteRenderer>();
+            followTarget = followTargetGameObj.GetComponent<WeaponFlyingObject>();
         }
 
         protected override void InitWeapon()
         {
-            // 获取目标的武器信息
-            VicViper vicViper = followTarget.GetComponent<VicViper>();
-            if (vicViper != null)
+            for (int i = 0; i < followTarget.weaponInfos.Length; i++)
             {
-                normalWeaponInfos = vicViper.normalWeaponInfos;
-                doubleWeaponInfo = vicViper.doubleWeaponInfo;
-                missileWeaponInfo = vicViper.missileWeaponInfo;
-                maxMissileLevel = vicViper.maxMissileLevel;
+                weaponInfos[i].poolName = followTarget.weaponInfos[i].poolName;
+                weaponInfos[i].shootFrequency = followTarget.weaponInfos[i].shootFrequency;
             }
-            else
-            {
-                Option option = followTarget.GetComponent<Option>();
-                if (option != null)
-                {
-                    normalWeaponInfos = option.normalWeaponInfos;
-                    doubleWeaponInfo = option.doubleWeaponInfo;
-                    missileWeaponInfo = option.missileWeaponInfo;
-                    maxMissileLevel = option.maxMissileLevel;
-                }
-            }
-            // 修改发射点
-            for (int i = 0; i < normalWeaponInfos.Length; i++)
-            {
-                normalWeaponInfos[i].barrelGameObj = normalBarrel;
-            }
-            doubleWeaponInfo.barrelGameObj = doubleBarrel;
-            missileWeaponInfo.barrelGameObj = missileBarrel;
-
             base.InitWeapon();
-            doubleWeapon = new Weapon(doubleWeaponInfo, 15);
-            missile = new Weapon(missileWeaponInfo, 10);
-            ResetUsingWeapons();
         }
 
-        public void ResetUsingWeapons()
+        public void UpdateUsingWeaponInfo(int currentWeaponIdx, int currentMissileLevel)
         {
-            VicViper vicViper = followTarget.GetComponent<VicViper>();
-            if (vicViper != null)
-            {
-                currentWeaponIdx = vicViper.currentWeaponIdx;
-                usingDouble = vicViper.usingDouble;
-                usingMissile = vicViper.usingMissile;
-                currentMissileLevel = vicViper.currentMissileLevel;
-            }
-            else
-            {
-                Option option = followTarget.GetComponent<Option>();
-                if (option != null)
-                {
-                    currentWeaponIdx = option.currentWeaponIdx;
-                    usingDouble = option.usingDouble;
-                    usingMissile = option.usingMissile;
-                    currentMissileLevel = option.currentMissileLevel;
-                }
-            }
-            missile.SetShootFrequency(missileWeaponInfo.shootFrequency);
+            this.currentWeaponIdx = currentWeaponIdx;
+            this.currentMissileLevel = currentMissileLevel;
         }
 
         private void InitTrack()
@@ -120,25 +67,6 @@ namespace Assets.Scripts.Class.Characters
             ResetTrack();
         }
 
-        private FlyingObject GetFlyingObject(GameObject tryGetGameObject)
-        {
-            FlyingObject ret = null;
-            FlyingObject flyingObject = tryGetGameObject.GetComponent<FlyingObject>();
-            if(flyingObject == null)
-            {
-                Option option = tryGetGameObject.GetComponent<Option>();
-                if (option != null && option.followTarget != null)
-                {
-                    ret = GetFlyingObject(option.followTarget);
-                }
-            }
-            else
-            {
-                ret = flyingObject;
-            }
-            return ret;
-        }
-
         private void ResetTrack()
         {
             for (int i = 0; i < track.Length; i++)
@@ -151,7 +79,6 @@ namespace Assets.Scripts.Class.Characters
         {
             if (isActive)
             {
-                //base.Update();
                 Move();
             }
         }
@@ -208,17 +135,9 @@ namespace Assets.Scripts.Class.Characters
         protected override void Shoot()
         {
             base.Shoot();
-            if (usingDouble)
-            {
-                doubleWeapon.TryShoot();
-            }
-            //if (usingMissile)
-            //{
-            //    missile.TryShoot();
-            //}
             if (currentMissileLevel > 0)
             {
-                missile.TryShoot();
+                weapons[MISSILE_WEAPON].TryShoot();
             }
         }
 
@@ -227,7 +146,7 @@ namespace Assets.Scripts.Class.Characters
             if(target != null)
             {
                 isActive = true;
-                followTarget = target;
+                followTargetGameObj = target;
                 Init();
                 coll.enabled = false;
                 sr.enabled = true;
@@ -246,7 +165,7 @@ namespace Assets.Scripts.Class.Characters
         }
 
 
-        private void OnDrawGizmos()
+        protected override void OnDrawGizmos()
         {
             for (int i = 0; track != null && i < track.Length; i++)
             {

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Others;
 
 namespace Assets.Scripts.Class.Bullets
 {
@@ -17,16 +17,6 @@ namespace Assets.Scripts.Class.Bullets
             }
         }
 
-        protected override void InitWeapon()
-        {
-
-        }
-
-        protected override void Shoot()
-        {
-
-        }
-
         protected virtual bool ShouldDisappear()
         {
             return Tool.IsOutOfCameraX(transform.position.x) || Tool.IsOutOfCameraY(transform.position.y);
@@ -34,13 +24,13 @@ namespace Assets.Scripts.Class.Bullets
 
         protected virtual void Disappear()
         {
-            if(objectPool == null)
+            if(sourcePool == null)
             {
                 Destroy(gameObject);
             }
             else
             {
-                objectPool.Recycling(gameObject);
+                sourcePool.Recycling(gameObject);
             }
         }
     }

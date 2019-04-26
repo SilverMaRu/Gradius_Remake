@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3364615935188041602
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5744424313331084450}
+  m_Layer: 0
+  m_Name: MissileBarrel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5744424313331084450
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3364615935188041602}
+  m_LocalRotation: {x: 0, y: 0, z: -0.38268343, w: 0.92387956}
+  m_LocalPosition: {x: 0.1, y: -0.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5522194747480203906}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45}
 --- !u!1 &5522194747088272995
 GameObject:
   m_ObjectHideFlags: 0
@@ -10,7 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5522194747088272994}
   m_Layer: 0
-  m_Name: Barrel
+  m_Name: NormalBarrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24,7 +54,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5522194747088272995}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.249, y: 0, z: 0}
+  m_LocalPosition: {x: 0.2, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5522194747480203906}
@@ -39,9 +69,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5522194747480203906}
+  - component: {fileID: 4108936003376520906}
   - component: {fileID: 5522194747480203907}
   - component: {fileID: 5522194747480204668}
-  - component: {fileID: 3893908739979992097}
   - component: {fileID: 1699781048621147150}
   m_Layer: 0
   m_Name: Option
@@ -62,9 +92,54 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5522194747088272994}
+  - {fileID: 6383913115043751194}
+  - {fileID: 5744424313331084450}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4108936003376520906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5522194747480204669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35d811efe0d259440ae3316f9225675a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: -1
+  atk: 0
+  maxHp: 0
+  baseHp: 0
+  penetrateImmunity: 0
+  maxSpeed: 10
+  baseSpeed: 7
+  isNormalized: 0
+  orientToDirection: 0
+  weaponInfos:
+  - barrelGameObjs:
+    - {fileID: 5522194747088272995}
+    shootFrequency: 0
+    poolName: 
+  - barrelGameObjs:
+    - {fileID: 3364615935188041602}
+    shootFrequency: 0
+    poolName: 
+  - barrelGameObjs:
+    - {fileID: 5522194747088272995}
+    - {fileID: 8541188804285093806}
+    shootFrequency: 0
+    poolName: 
+  - barrelGameObjs:
+    - {fileID: 5522194747088272995}
+    shootFrequency: 0
+    poolName: 
+  poolInfos: []
+  isActive: 0
+  followTargetGameObj: {fileID: 0}
+  followDistance: 3
 --- !u!212 &5522194747480203907
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -132,22 +207,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &3893908739979992097
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5522194747480204669}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1729a29d063cf74196c685bb90e8629, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  followTarget: {fileID: 0}
-  useTargetSpeed: 1
-  speed: 0
-  followDistance: 3
 --- !u!58 &1699781048621147150
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -164,3 +223,33 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.25
+--- !u!1 &8541188804285093806
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6383913115043751194}
+  m_Layer: 0
+  m_Name: DoubleBarrel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6383913115043751194
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8541188804285093806}
+  m_LocalRotation: {x: 0, y: 0, z: 0.38268343, w: 0.92387956}
+  m_LocalPosition: {x: 0.1, y: 0.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5522194747480203906}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45}

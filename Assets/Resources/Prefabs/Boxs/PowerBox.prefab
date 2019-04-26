@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1565073641562128597}
+  - component: {fileID: 7906731905720192132}
   - component: {fileID: 639544105096335824}
   - component: {fileID: 8433226195744822551}
   - component: {fileID: 4962416271817420224}
-  - component: {fileID: 401413356473823131}
   m_Layer: 0
   m_Name: PowerBox
   m_TagString: PowerBox
@@ -34,6 +34,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7906731905720192132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4529574974200103380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 089d834bae723a642842e4283ee750b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 0
+  atk: 0
 --- !u!212 &639544105096335824
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -127,16 +141,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 0.7}
   m_EdgeRadius: 0
---- !u!114 &401413356473823131
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4529574974200103380}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a3ea3fdc4cf4a142a7494a094d7a913, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  boxType: 1

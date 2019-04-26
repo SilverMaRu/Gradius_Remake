@@ -70,19 +70,22 @@ namespace Assets.Scripts.Class.Characters
             {
                 return;
             }
-            // 当前对象发射点到vicViper的向量
-            Vector3 bt = aimTarget.transform.position - normalWeapons[currentWeaponIdx].barrelTrans.position;
-            Vector3 direction = bt;
+            for (int i = 0; i < weaponInfos[currentWeaponIdx].barrelGameObjs.Length; i++)
+            {
+                // 当前对象发射点到aimTarget的向量
+                Vector3 bt = aimTarget.transform.position - weaponInfos[currentWeaponIdx].barrelGameObjs[i].transform.position;
+                Vector3 direction = bt;
 
-            if (angleMVXFlatAngle >= minAimAngle - halfRemainder && angleMVXFlatAngle < minAimAngle)
-            {
-                direction = Quaternion.Euler(0, 0, minAimAngle) * transform.right;
+                if (angleMVXFlatAngle >= minAimAngle - halfRemainder && angleMVXFlatAngle < minAimAngle)
+                {
+                    direction = Quaternion.Euler(0, 0, minAimAngle) * transform.right;
+                }
+                else if (angleMVXWeekAngle > maxAimAngle && angleMVXFlatAngle < maxAimAngle + halfRemainder)
+                {
+                    direction = Quaternion.Euler(0, 0, maxAimAngle) * transform.right;
+                }
+                weaponInfos[currentWeaponIdx].barrelGameObjs[i].transform.right = direction;
             }
-            else if (angleMVXWeekAngle > maxAimAngle && angleMVXFlatAngle < maxAimAngle + halfRemainder)
-            {
-                direction = Quaternion.Euler(0, 0, maxAimAngle) * transform.right;
-            }
-            normalWeapons[currentWeaponIdx].barrelTrans.right = direction;
             base.Shoot();
         }
     }

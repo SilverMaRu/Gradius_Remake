@@ -2,7 +2,7 @@
 
 namespace Assets.Scripts.Class.Characters
 {
-    public class SineMove : BaseClass.Auto
+    public class SineMove : BaseClass.AutoMove
     {
         [Header("变换频率(s)")]
         public float frequency = 1;
@@ -18,11 +18,6 @@ namespace Assets.Scripts.Class.Characters
             appearTime += Time.deltaTime;
         }
 
-        protected override void InitWeapon()
-        {
-
-        }
-
         protected override Vector3 GetMoveDirection()
         {
             float revise = Mathf.Cos(doublePi * appearTime / frequency) * amplitude;
@@ -32,11 +27,6 @@ namespace Assets.Scripts.Class.Characters
                 direction = (Vector3.left + Vector3.up * revise).normalized;
             }
             return direction;
-        }
-
-        protected override void Shoot()
-        {
-
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Assets.Scripts.Others;
 
 namespace Assets.Scripts.Class.Bullets
 {

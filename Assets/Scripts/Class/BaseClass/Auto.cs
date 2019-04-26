@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
+using Assets.Scripts.Others;
 
 namespace Assets.Scripts.Class.BaseClass
 {
-    public class Auto : FlyingObject
+    public class Auto : WeaponFlyingObject
     {
         [Header("判断X轴超出屏幕的修正")]
         public float outOfXOffset = 1;
 
         protected override void Update()
         {
-            if(Tool.IsOutOfCameraX(transform.position.x, outOfXOffset))
+            if (Tool.IsOutOfCameraX(transform.position.x, outOfXOffset))
             {
                 return;
             }

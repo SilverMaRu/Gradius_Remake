@@ -1,44 +1,31 @@
 ﻿using UnityEngine;
+using Assets.Scripts.GameObjectPool;
 
 namespace Assets.Scripts.Class.Weapons
 {
-    public class DoubleWeapon: Weapon
-    {
-        public GameObject secondaryBulletPre { get; protected set; }
-        public Transform secondaryBarrelTrans { get; protected set; }
+    //[System.Serializable]
+    //public class DoubleWeapon: Weapon
+    //{
+    //    public GameObject secondaryBarrelGameObj;
 
-        public DoubleWeapon(string bulletPath, Transform barrelTrans, Transform secondaryBarrelTrans, float shootFrequency, BaseClass.Team team
-            , int initCapacity) : this(bulletPath, barrelTrans, secondaryBarrelTrans, shootFrequency, team
-            , initCapacity, () => { })
-        { }
+    //    public DoubleWeapon(GameObject barrelGameObj, float shootFrequency, BaseClass.Team team, BulletInfo[] bulletInfos)
+    //        : base(barrelGameObj, shootFrequency, team, bulletInfos)
+    //    {
+    //        secondaryBarrelGameObj = barrelGameObj;
+    //    }
 
-        public DoubleWeapon(string bulletPath, Transform barrelTrans, Transform secondaryBarrelTrans, float shootFrequency, BaseClass.Team team
-            , int initCapacity, System.Action recyclingOtherAction)
-            : this(bulletPath, bulletPath, barrelTrans, secondaryBarrelTrans, shootFrequency, team, initCapacity, recyclingOtherAction)
-        {
-        }
+    //    public DoubleWeapon(GameObject barrelGameObj, GameObject secondaryBarrelGameObj, float shootFrequency, BaseClass.Team team, BulletInfo[] bulletInfos) 
+    //        : base(barrelGameObj, shootFrequency, team, bulletInfos)
+    //    {
+    //        this.secondaryBarrelGameObj = secondaryBarrelGameObj;
+    //    }
 
-        public DoubleWeapon(string bulletPath, string secondaryBulletPath, Transform barrelTrans, Transform secondaryBarrelTrans, float shootFrequency, BaseClass.Team team
-            , int initCapacity) : this(bulletPath, secondaryBulletPath, barrelTrans, secondaryBarrelTrans, shootFrequency, team
-            , initCapacity, () => { })
-        { }
-
-        public DoubleWeapon(string bulletPath, string secondaryBulletPath, Transform barrelTrans, Transform secondaryBarrelTrans, float shootFrequency, BaseClass.Team team
-            , int initCapacity, System.Action recyclingOtherAction)
-            : base(bulletPath, barrelTrans, shootFrequency, team, initCapacity, recyclingOtherAction)
-        {
-            secondaryBulletPre = Resources.Load<GameObject>(secondaryBulletPath);
-            this.secondaryBarrelTrans = secondaryBarrelTrans;
-        }
-
-        protected override void Shoot()
-        {
-            base.Shoot();
-            //GameObject instance = Object.Instantiate(secondaryBulletPre, secondaryBarrelTrans.position, secondaryBarrelTrans.rotation);
-            GameObject instance = bulletPool.Get(barrelTrans.position, barrelTrans.rotation);
-            BaseClass.Something something = instance.GetComponent<BaseClass.Something>();
-            something.team = team;
-            //something.objectPool = bulletPool;
-        }
-    }
+    //    protected override void Shoot()
+    //    {
+    //        base.Shoot();
+    //        GameObject instance = PoolTool.GetGameObject(bulletInfos[usingBulletIdx].poolName, secondaryBarrelGameObj.transform.position, secondaryBarrelGameObj.transform.rotation);
+    //        BaseClass.Something something = instance.GetComponent<BaseClass.Something>();
+    //        something.team = team;
+    //    }
+    //}
 }

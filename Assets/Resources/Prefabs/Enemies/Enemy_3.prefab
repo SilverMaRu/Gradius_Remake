@@ -9,12 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5741387346713235482}
+  - component: {fileID: 1088687831377993862}
+  - component: {fileID: 365825999371318566}
   - component: {fileID: 5741387346713235483}
-  - component: {fileID: 5741387346713235476}
-  - component: {fileID: 5741387346713235477}
   - component: {fileID: 5741387346713235478}
   - component: {fileID: 5741387346713235479}
-  - component: {fileID: 37117807274876056}
   m_Layer: 0
   m_Name: Enemy_3
   m_TagString: Enemy
@@ -29,13 +28,61 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5741387346713235472}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 9.42, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &1088687831377993862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5741387346713235472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7899f37fbe67907468a7a6f236dd5329, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 1
+  atk: 1
+  maxHp: 1
+  baseHp: 1
+  penetrateImmunity: 1
+  explosionEffectPoolName: DieEffect_2
+  maxSpeed: 5
+  baseSpeed: 5
+  isNormalized: 1
+  orientToDirection: 1
+  outOfXOffset: 1
+  frequency: 1
+--- !u!114 &365825999371318566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5741387346713235472}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f84ce5c9d88d1548aa86e4585c5c8bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 1
+  atk: 1
+  maxHp: 1
+  baseHp: 1
+  penetrateImmunity: 1
+  explosionEffectPoolName: DieEffect_2
+  maxSpeed: 5
+  baseSpeed: 5
+  isNormalized: 1
+  orientToDirection: 1
+  outOfXOffset: 1
+  routeGameObject: {fileID: 0}
 --- !u!212 &5741387346713235483
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -75,7 +122,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300104, guid: c406813c495c148439fd16f98cbfdfa9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.8, y: 0.8}
@@ -84,45 +131,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5741387346713235476
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5741387346713235472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17a739f7bb507144f86631da81798200, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  team: -1
-  maxHp: 1
-  baseHp: 1
-  maxSpeed: 10
-  baseSpeed: 5
-  bulletPath: Prefabs/Bullets
-  orientToDirection: 1
-  dieEffectPath: Prefabs/Effects/Die/Normal
---- !u!114 &5741387346713235477
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5741387346713235472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e772b711f99411e42aa7231bbb45eb07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveMode: 2
-  sawtoothFrequency: 1
-  sineFrequency: 1
-  sineAmplitude: 1
-  billowFrequency: 1
-  billowAmplitude: 1
-  isNormalizedDirection: 1
 --- !u!58 &5741387346713235478
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -160,21 +168,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &37117807274876056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5741387346713235472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: caa708f7db49e33469c5bfbf3258fb21, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  awards:
-  - prefabPath: Prefabs/Boxs/PowerBox
-    odds: 0.1
-  - prefabPath: Prefabs/Boxs/RevivalBox
-    odds: 0.05
-  inLine: 0

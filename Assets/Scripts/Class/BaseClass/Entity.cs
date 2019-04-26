@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Assets.Scripts.GameObjectPool;
 
 namespace Assets.Scripts.Class.BaseClass
 {
@@ -9,6 +10,8 @@ namespace Assets.Scripts.Class.BaseClass
         public int currentHp { get; protected set; }
         [Header("Energy类型穿过时消耗的Energy")]
         public int penetrateImmunity;
+        [Header("死亡爆炸特效对象池名称")]
+        public string explosionEffectPoolName;
         public bool isInvincible { get; protected set; }
         public bool isAlive { get; protected set; }
         
@@ -21,14 +24,15 @@ namespace Assets.Scripts.Class.BaseClass
         protected virtual void Die()
         {
             isAlive = false;
-            if (objectPool == null)
+            if (sourcePool == null)
             {
                 Destroy(gameObject);
             }
             else
             {
-                objectPool.Recycling(gameObject);
+                sourcePool.Recycling(gameObject);
             }
+            PoolTool.GetGameObject(explosionEffectPoolName, transform.position, Quaternion.identity);
         }
 
         public virtual void Hurt(int damage)

@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 523755233294197968}
+  - component: {fileID: 5860450525736518562}
   - component: {fileID: 706887150780022062}
   - component: {fileID: 8027266401310886746}
   - component: {fileID: 926832334458795808}
-  - component: {fileID: 2800227822787575108}
   m_Layer: 0
   m_Name: Bullet_11
   m_TagString: Untagged
@@ -34,6 +34,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5860450525736518562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7209985502687169956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74680ea85cae35f4081d906ebf21bd3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 1
+  atk: 1
+  maxHp: 1
+  baseHp: 1
+  penetrateImmunity: 1
+  maxSpeed: 10
+  baseSpeed: 7
+  isNormalized: 0
+  orientToDirection: 0
+  normalBarrel: {fileID: 0}
 --- !u!212 &706887150780022062
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -119,22 +141,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &2800227822787575108
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7209985502687169956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ca228bb4e3dc5340923f9aab530f45f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shootTeam: -1
-  isMissile: 0
-  isHitLimited: 1
-  maxHitNum: 1
-  direction: {x: -4.0918937, y: 3.8989158, z: 0}
-  speed: 15
-  firePower: 1

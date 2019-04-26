@@ -2,7 +2,7 @@
 
 namespace Assets.Scripts.Class.Characters
 {
-    public class OnRouteMove : BaseClass.Auto
+    public class OnRouteMove : BaseClass.AutoMove
     {
         [Header("包含了移动路线点的游戏对象")]
         public GameObject routeGameObject;
@@ -33,11 +33,6 @@ namespace Assets.Scripts.Class.Characters
             }
         }
 
-        protected override void InitWeapon()
-        {
-
-        }
-
         protected override void Move()
         {
             if (routePoints == null || routePoints.Length <= 0 || pointIdx >= routePoints.Length)
@@ -59,11 +54,6 @@ namespace Assets.Scripts.Class.Characters
                     pointIdx++;
                 }
             }
-        }
-
-        protected override void Shoot()
-        {
-
         }
 
         protected override void OnDrawGizmos()

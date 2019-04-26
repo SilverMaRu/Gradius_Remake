@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 600205499558062766}
+  - component: {fileID: 7512979536848783774}
   - component: {fileID: 4339385690931894078}
   - component: {fileID: 5857927955033111405}
   - component: {fileID: 6734133511985733649}
-  - component: {fileID: 7298142807726908276}
   m_Layer: 0
   m_Name: RevivalBox
   m_TagString: RevivalBox
@@ -34,6 +34,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7512979536848783774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2160912583273244541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 089d834bae723a642842e4283ee750b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 0
+  atk: 0
 --- !u!212 &4339385690931894078
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -111,7 +125,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -127,16 +141,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 0.7}
   m_EdgeRadius: 0
---- !u!114 &7298142807726908276
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2160912583273244541}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a3ea3fdc4cf4a142a7494a094d7a913, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  boxType: 2

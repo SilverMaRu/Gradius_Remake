@@ -20,13 +20,13 @@ namespace Assets.Scripts.Class.BaseClass
 
         protected virtual void Disappear()
         {
-            if(objectPool == null)
+            if(sourcePool == null)
             {
                 Destroy(gameObject);
             }
             else
             {
-                objectPool.Recycling(gameObject);
+                sourcePool.Recycling(gameObject);
             }
         }
 

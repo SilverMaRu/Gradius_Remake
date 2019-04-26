@@ -13,7 +13,7 @@ namespace Assets.Scripts.Class.BaseClass
         public Team team = Team.Gray;
         public int atk;
 
-        public ObjectPool objectPool { get; set; }
+        public GameObjectPool.ObjectPool sourcePool { get; set; }
 
         // Start is called before the first frame update
         protected virtual void Start()

@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 7740163598617120547}
   - component: {fileID: 7740163598617120548}
-  - component: {fileID: 9072693776060274232}
+  - component: {fileID: 636029204692768258}
   - component: {fileID: 2419295443519333887}
   - component: {fileID: 1554604442262212921}
   - component: {fileID: 5280817396024411657}
   m_Layer: 0
-  m_Name: Bullet_3
+  m_Name: 03_Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &9072693776060274232
+--- !u!114 &636029204692768258
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,16 +92,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 7740163598617120550}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ca228bb4e3dc5340923f9aab530f45f, type: 3}
+  m_Script: {fileID: 11500000, guid: 20731fa7db8c6424f8ab47597e818683, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootTeam: 1
-  isMissile: 0
-  isHitLimited: 1
-  maxHitNum: 5
-  direction: {x: 1, y: 0, z: 0}
-  speed: 15
-  firePower: 1
+  team: -1
+  atk: 1
+  maxEnergy: 3
+  baseEnergy: 3
+  speed: 12
 --- !u!61 &2419295443519333887
 BoxCollider2D:
   m_ObjectHideFlags: 0

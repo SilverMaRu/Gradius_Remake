@@ -1,68 +1,34 @@
 ﻿using UnityEngine;
+using Assets.Scripts.GameObjectPool;
 
 namespace Assets.Scripts.Class.Weapons
 {
+    [System.Serializable]
+    public class WeaponInfo
+    {
+        public GameObject[] barrelGameObjs;
+        public float shootFrequency;
+        public string poolName;
+    }
+
     public class Weapon
     {
-        [System.Serializable]
-        public class WeaponInitInfo
-        {
-            public string bulletPath;
-            public GameObject barrelGameObj;
-            public float shootFrequency;
-            public BaseClass.Team team { get; set; }
+        public GameObject[] barrelGameObjs;
+        public float shootFrequency;
+        public BaseClass.Team team { get; set; }
+        public string poolName;
 
-            public WeaponInitInfo(string bulletPath, GameObject barrelGameObj, float shootFrequency, BaseClass.Team team)
-            {
-                this.bulletPath = bulletPath;
-                this.barrelGameObj = barrelGameObj;
-                this.shootFrequency = shootFrequency;
-                this.team = team;
-            }
-
-            public bool IsEffective()
-            {
-                return !string.Empty.Equals(bulletPath.Trim())
-                    && barrelGameObj != null;
-            }
-        }
-
-        public GameObject bulletPre { get; protected set; }
-        public Transform barrelTrans { get; protected set; }
-        public float shootFrequency { get; protected set; }
-        public BaseClass.Team team { get; protected set; }
-        public WeaponInitInfo info { get; protected set; }
-
-        protected ObjectPool bulletPool;
-
+        protected int usingBulletIdx;
         private float lastShootTime;
-
-        public Weapon(string bulletPath, Transform barrelTrans, BaseClass.Team team, int initCapacity) : this(bulletPath, barrelTrans, 0, team, initCapacity, () => { }) { }
-
-        public Weapon(string bulletPath, Transform barrelTrans, float shootFrequency, BaseClass.Team team, int initCapacity, System.Action recyclingOtherAction)
+        
+        public Weapon(GameObject[] barrelGameObjs, float shootFrequency, BaseClass.Team team, string poolName)
         {
-            info = new WeaponInitInfo(bulletPath, barrelTrans.gameObject, shootFrequency, team);
-            bulletPre = Resources.Load<GameObject>(bulletPath);
-            this.barrelTrans = barrelTrans;
+            this.barrelGameObjs = barrelGameObjs;
             this.shootFrequency = shootFrequency;
             this.team = team;
+            this.poolName = poolName;
             lastShootTime = -shootFrequency;
-
-            bulletPool = new ObjectPool(bulletPre, initCapacity, recyclingOtherAction);
-        }
-
-        public Weapon(WeaponInitInfo info, int initCapacity) : this(info, initCapacity, () => { }) { }
-
-        public Weapon(WeaponInitInfo info, int initCapacity, System.Action recyclingOtherAction)
-        {
-            this.info = info;
-            bulletPre = Resources.Load<GameObject>(info.bulletPath);
-            barrelTrans = info.barrelGameObj.transform;
-            shootFrequency = info.shootFrequency;
-            team = info.team;
-            lastShootTime = -shootFrequency;
-
-            bulletPool = new ObjectPool(bulletPre, initCapacity, recyclingOtherAction);
+            usingBulletIdx = 0;
         }
 
         public void TryShoot()
@@ -76,23 +42,23 @@ namespace Assets.Scripts.Class.Weapons
 
         protected virtual void Shoot()
         {
-            //GameObject instance = Object.Instantiate(bulletPre, barrelTrans.position, barrelTrans.rotation);
-            GameObject instance = bulletPool.Get(barrelTrans.position, barrelTrans.rotation);
-            BaseClass.Something something = instance.GetComponent<BaseClass.Something>();
-            something.team = team;
-            //something.objectPool = bulletPool;
+            for(int i = 0; i < barrelGameObjs.Length; i++)
+            {
+                GameObject instance = PoolTool.GetGameObject(poolName, barrelGameObjs[i].transform.position, barrelGameObjs[i].transform.rotation);
+                BaseClass.Something something = instance.GetComponent<BaseClass.Something>();
+                something.team = team;
+            }
         }
 
         protected virtual bool CanShoot()
         {
-            return bulletPre != null && barrelTrans != null && Time.time - lastShootTime > shootFrequency;
+            return barrelGameObjs != null && Time.time - lastShootTime > shootFrequency;
         }
 
-        public void SetShootFrequency(float shootFrequency)
-        {
-            this.shootFrequency = shootFrequency;
-            info.shootFrequency = shootFrequency;
-        }
+        //public void ChangeBullet()
+        //{
+        //    usingBulletIdx = (usingBulletIdx + 1) % bulletInfos.Length;
+        //}
     }
 }
 

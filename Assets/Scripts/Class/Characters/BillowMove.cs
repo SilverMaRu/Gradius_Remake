@@ -2,7 +2,7 @@
 
 namespace Assets.Scripts.Class.Characters
 {
-    public class BillowMove : BaseClass.Auto
+    public class BillowMove : BaseClass.AutoMove
     {
         [Header("变换频率(s)")]
         public float frequency = 1;
@@ -16,11 +16,6 @@ namespace Assets.Scripts.Class.Characters
         {
             base.Update();
             appearTime += Time.deltaTime;
-        }
-
-        protected override void InitWeapon()
-        {
-
         }
 
         protected override Vector3 GetMoveDirection()
@@ -38,11 +33,6 @@ namespace Assets.Scripts.Class.Characters
                 direction = (Vector3.left + Vector3.up * revise).normalized;
             }
             return direction;
-        }
-
-        protected override void Shoot()
-        {
-
         }
     }
 }
