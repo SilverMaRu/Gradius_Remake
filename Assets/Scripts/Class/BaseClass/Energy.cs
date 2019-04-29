@@ -13,21 +13,9 @@ namespace Assets.Scripts.Class.BaseClass
             currentEnergy = baseEnergy;
         }
 
-        protected virtual bool ShouldDisappear()
+        protected override bool ShouldDisappear()
         {
             return currentEnergy <= 0;
-        }
-
-        protected virtual void Disappear()
-        {
-            if(sourcePool == null)
-            {
-                Destroy(gameObject);
-            }
-            else
-            {
-                sourcePool.Recycling(gameObject);
-            }
         }
 
         public virtual void HitSomething(int expend)

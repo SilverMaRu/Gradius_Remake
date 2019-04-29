@@ -6,32 +6,20 @@ namespace Assets.Scripts.Class.Bullets
     {
         protected override void Update()
         {
-            base.Update();
             if (ShouldDisappear())
             {
                 Disappear();
             }
             else
             {
+                base.Update();
                 Move();
             }
         }
 
-        protected virtual bool ShouldDisappear()
+        protected override bool ShouldDisappear()
         {
             return Tool.IsOutOfCameraX(transform.position.x) || Tool.IsOutOfCameraY(transform.position.y);
-        }
-
-        protected virtual void Disappear()
-        {
-            if(sourcePool == null)
-            {
-                Destroy(gameObject);
-            }
-            else
-            {
-                sourcePool.Recycling(gameObject);
-            }
         }
     }
 }

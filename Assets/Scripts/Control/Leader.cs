@@ -108,6 +108,7 @@ namespace Assets.Scripts.Control
             {
                 Gizmos.color = Color.white;
                 Transform[] routePointTrans = FindRoute();
+                Gizmos.DrawLine(transform.position, routePointTrans[0].position);
                 for (int i = 0;i< routePointTrans.Length; i++)
                 {
                     Gizmos.DrawSphere(routePointTrans[i].position, 0.15f);

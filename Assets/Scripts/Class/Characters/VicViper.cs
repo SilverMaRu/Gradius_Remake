@@ -312,28 +312,12 @@ namespace Assets.Scripts.Class.Characters
                 {
                     currentPowerBoxNum = 1;
                 }
-                Something something = collision.GetComponent<Something>();
-                if(something != null)
-                {
-                    something.sourcePool.Recycling(collision.gameObject);
-                }
-                else
-                {
-                    Destroy(collision.gameObject);
-                }
+                PoolTool.Recycling(collision.gameObject);
             }
             else if ("RevivalBox".Equals(collision.tag))
             {
                 revival++;
-                Something something = collision.GetComponent<Something>();
-                if (something != null)
-                {
-                    something.sourcePool.Recycling(collision.gameObject);
-                }
-                else
-                {
-                    Destroy(collision.gameObject);
-                }
+                PoolTool.Recycling(collision.gameObject);
             }
             else if ("Option".Equals(collision.tag))
             {

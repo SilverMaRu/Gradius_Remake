@@ -17,23 +17,13 @@ namespace Assets.Scripts.GameObjectPool
         }
         protected static Dictionary<string, ObjectPool> namePoolPairs = new Dictionary<string, ObjectPool>();
 
-        public static void AddObjectPool(string poolName, string prefabPath, int capacity)
-        {
-            AddObjectPool(poolName, prefabPath, capacity, () => { });
-        }
-
-        public static void AddObjectPool(string poolName, string prefabPath, int capacity, Action recyclingOtherAction)
+        public static void AddObjectPool(string poolName, string prefabPath, int capacity, Transform parent)
         {
             GameObject prefab = Resources.Load<GameObject>(prefabPath);
-            AddObjectPool(poolName, prefab, capacity, recyclingOtherAction);
+            AddObjectPool(poolName, prefab, capacity, parent);
         }
 
-        public static void AddObjectPool(string poolName, GameObject prefab, int capacity)
-        {
-            AddObjectPool(poolName, prefab, capacity, () => { });
-        }
-
-        public static void AddObjectPool(string poolName, GameObject prefab, int capacity, Action recyclingOtherAction)
+        public static void AddObjectPool(string poolName, GameObject prefab, int capacity, Transform parent)
         {
             bool containsKey = namePoolPairs.ContainsKey(poolName);
             if (containsKey)
@@ -42,22 +32,7 @@ namespace Assets.Scripts.GameObjectPool
             }
             else
             {
-                namePoolPairs.Add(poolName, new ObjectPool(prefab, capacity, recyclingOtherAction));
-            }
-        }
-
-        public static void AddObjectPool(Control.PoolInfo info)
-        {
-            GameObject prefab = Resources.Load<GameObject>(info.prefabPath);
-            bool containsKey = namePoolPairs.ContainsKey(info.poolName);
-            if (containsKey)
-            {
-                namePoolPairs[info.poolName].Expand(info.capacity);
-            }
-            else
-            {
-                //namePoolPairs.Add(info.poolName, new ObjectPool(prefab, info.capacity, info.recyclingOtherAction));
-                namePoolPairs.Add(info.poolName, new ObjectPool(prefab, info.capacity));
+                namePoolPairs.Add(poolName, new ObjectPool(prefab, capacity, parent));
             }
         }
 
@@ -70,6 +45,24 @@ namespace Assets.Scripts.GameObjectPool
                 ret = namePoolPairs[poolName].Get(position, rotation);
             }
             return ret;
+        }
+
+        public static void Recycling(GameObject gameObject)
+        {
+            Recycling(gameObject, () => { });
+        }
+
+        public static void Recycling(GameObject gameObject, Action otherAction)
+        {
+            ObjectPoolAttr objectPoolAttr = gameObject.GetComponent<ObjectPoolAttr>();
+            if (objectPoolAttr != null)
+            {
+                objectPoolAttr.sourcePool.Recycling(gameObject, otherAction);
+            }
+            else
+            {
+                UnityEngine.Object.Destroy(gameObject);
+            }
         }
     }
 }

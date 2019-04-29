@@ -13,8 +13,6 @@ namespace Assets.Scripts.Class.BaseClass
         public Team team = Team.Gray;
         public int atk;
 
-        public GameObjectPool.ObjectPool sourcePool { get; set; }
-
         // Start is called before the first frame update
         protected virtual void Start()
         {
@@ -35,5 +33,15 @@ namespace Assets.Scripts.Class.BaseClass
         protected virtual void InitGameObjects() { }
 
         protected virtual void InitComponents() { }
+
+        protected virtual bool ShouldDisappear()
+        {
+            return true;
+        }
+
+        protected virtual void Disappear()
+        {
+            GameObjectPool.PoolTool.Recycling(gameObject);
+        }
     }
 }

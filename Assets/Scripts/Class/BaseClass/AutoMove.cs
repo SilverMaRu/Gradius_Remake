@@ -8,14 +8,28 @@ namespace Assets.Scripts.Class.BaseClass
         [Header("判断X轴超出屏幕的修正")]
         public float outOfXOffset = 1;
 
+        private float wakeTime = 0;
+
         protected override void Update()
         {
             if(Tool.IsOutOfCameraX(transform.position.x, outOfXOffset))
             {
-                return;
+                if (ShouldDisappear())
+                {
+                    Disappear();
+                }
             }
-            base.Update();
-            Move();
+            else
+            {
+                base.Update();
+                Move();
+                wakeTime += Time.deltaTime;
+            }
+        }
+
+        protected override bool ShouldDisappear()
+        {
+            return base.ShouldDisappear() || wakeTime > 0 && Tool.IsOutOfCameraX(transform.position.x, outOfXOffset);
         }
 
         protected virtual void OnDrawGizmos()

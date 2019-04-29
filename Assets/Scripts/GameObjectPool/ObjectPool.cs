@@ -9,38 +9,33 @@ namespace Assets.Scripts.GameObjectPool
         public int capacity { get; set; }
         public GameObject prefab { get; protected set; }
         public GameObject[] gameObjects { get; protected set; }
+        protected Transform parent;
         protected int nextIndex;
-        //// 回收方法的额外行为
-        //protected System.Action recyclingOtherAction;
 
-        public ObjectPool(string prefabPath, int capacity) : this(Resources.Load<GameObject>(prefabPath), capacity, () => { }) { }
+        public ObjectPool(string prefabPath, int capacity, Transform parent) : this(Resources.Load<GameObject>(prefabPath), capacity, parent) { }
 
-        public ObjectPool(string prefabPath, int capacity, System.Action recyclingOtherAction) : this(Resources.Load<GameObject>(prefabPath), capacity, recyclingOtherAction) { }
-
-        public ObjectPool(GameObject prefab, int capacity) : this(prefab, capacity, () => { }) { }
-
-        public ObjectPool(GameObject prefab, int capacity, System.Action recyclingOtherAction)
+        public ObjectPool(GameObject prefab, int capacity, Transform parent)
         {
             this.prefab = prefab;
             this.capacity = capacity;
             gameObjects = new GameObject[capacity];
+            this.parent = parent;
             for (int i = 0; i < gameObjects.Length; i++)
             {
                 gameObjects[i] = Instantiate();
             }
             nextIndex = 0;
-            //this.recyclingOtherAction = recyclingOtherAction;
         }
 
         private GameObject Instantiate()
         {
-            GameObject retObject = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity);
-
-            Class.BaseClass.Something something = retObject.GetComponent<Class.BaseClass.Something>();
-            if (something != null)
+            GameObject retObject = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity, parent);
+            ObjectPoolAttr attr = retObject.GetComponent<ObjectPoolAttr>();
+            if (attr == null)
             {
-                something.sourcePool = this;
+                attr = retObject.AddComponent<ObjectPoolAttr>();
             }
+            attr.sourcePool = this;
             retObject.SetActive(false);
             return retObject;
         }
@@ -81,8 +76,13 @@ namespace Assets.Scripts.GameObjectPool
 
         public void Recycling(GameObject gameObject)
         {
+            Recycling(gameObject, () => { });
+        }
+
+        public void Recycling(GameObject gameObject, System.Action otherAction)
+        {
             gameObject.SetActive(false);
-            //recyclingOtherAction?.Invoke();
+            otherAction();
         }
     }
 }

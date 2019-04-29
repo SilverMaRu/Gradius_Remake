@@ -8,7 +8,6 @@ namespace Assets.Scripts.Control
         public string poolName;
         public string prefabPath;
         public int capacity;
-        //public System.Action recyclingOtherAction { get; set; }
     }
 
     public class PoolControl : MonoBehaviour
@@ -19,18 +18,8 @@ namespace Assets.Scripts.Control
         {
             for (int i = 0; i < poolInfos.Length; i++)
             {
-                //poolInfos[i].recyclingOtherAction = () => { };
-                GameObjectPool.PoolTool.AddObjectPool(poolInfos[i]);
+                GameObjectPool.PoolTool.AddObjectPool(poolInfos[i].poolName, poolInfos[i].prefabPath, poolInfos[i].capacity, transform);
             }
-        }
-
-        private void Start()
-        {
-            //for (int i = 0; i < poolInfos.Length; i++)
-            //{
-            //    poolInfos[i].recyclingOtherAction = () => { };
-            //    GameObjectPool.PoolTool.AddObjectPool(poolInfos[i]);
-            //}
         }
     }
 }

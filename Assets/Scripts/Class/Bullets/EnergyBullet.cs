@@ -9,19 +9,21 @@ namespace Assets.Scripts.Class.Bullets
 
         protected override void Update()
         {
-            base.Update();
-            Move();
+            if (ShouldDisappear())
+            {
+                Disappear();
+            }
+            else
+            {
+                base.Update();
+                Move();
+            }
         }
 
         protected virtual void Move()
         {
             Vector3 deltaDis = transform.right * speed * Time.deltaTime;
             transform.Translate(deltaDis);
-            // 子弹与镜头的水平差值
-            if (ShouldDisappear())
-            {
-                Disappear();
-            }
         }
 
         protected override bool ShouldDisappear()

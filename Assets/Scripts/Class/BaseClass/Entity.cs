@@ -21,17 +21,16 @@ namespace Assets.Scripts.Class.BaseClass
             isAlive = true;
         }
 
+        protected override bool ShouldDisappear()
+        {
+            return !isAlive;
+        }
+
         protected virtual void Die()
         {
             isAlive = false;
-            if (sourcePool == null)
-            {
-                Destroy(gameObject);
-            }
-            else
-            {
-                sourcePool.Recycling(gameObject);
-            }
+            //PoolTool.Recycling(gameObject);
+            Disappear();
             PoolTool.GetGameObject(explosionEffectPoolName, transform.position, Quaternion.identity);
         }
 

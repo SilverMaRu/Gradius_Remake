@@ -28,15 +28,7 @@ namespace Assets.Scripts.Control
 
             if (currentAnimatorStateInfo.normalizedTime >= 1.0f)
             {
-                Class.BaseClass.Something something = GetComponent<Class.BaseClass.Something>();
-                if (something != null)
-                {
-                    something.sourcePool.Recycling(gameObject);
-                }
-                else
-                {
-                    Destroy(gameObject);
-                }
+                GameObjectPool.PoolTool.Recycling(gameObject);
             }
         }
     }
